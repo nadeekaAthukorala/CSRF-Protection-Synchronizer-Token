@@ -4,9 +4,6 @@ Login credentials : <br>
   username: admin <br>
   password: 1234qwerty <br>
   
- enter any value to the text field in welcome.php and submit.<br>
- form will be submitted along with the csrf token and session cookie. <br>
- if the submitted token is available and matched with the generated token you will see the Demo.php <br>
- click logout to logout from demo. <br>
- 
- Known issues: had an error in fetching csrf token from welcome.php to demo.php <br> 
+ Upon login, session created and csrf token is generated and stored with session in serverside.<br>
+ when a user is submitting the form, token value is too submitted in the url.<br>
+ After submission submitted token is checked against the token stored in the server side to verify the submission is free from malicious CSRF attacks. 
