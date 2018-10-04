@@ -1,10 +1,7 @@
 <?php
-require_once('Token.php');
+session_start();
 
-$cookie_name = session_name();
-if (session_start()){
-    setcookie($cookie_name, session_id(), time() + (60), "/",null,null,true);
-}
+require_once('Token.php');
 
 $username = "admin";
 $password = "1234qwerty";
@@ -15,14 +12,21 @@ if(isset($_SESSION['login'])){
 
     echo "<h5>Welcome ". $_SESSION['login']."</h5>";
     header("Location: $_SERVER[PHP_SELF]");
+
+    if (isset($_POST['quantity'], $_POST['product'], $_POST['token'])){
+
+        $quantity = $_POST['quantity'];
+        $product = $_POST['product'];
+    }
+    if (!empty($quantity) && !empty($product)){
+        if (checkToken($_POST['token'])){
+            echo "<h4> Your submission is valid: Order can be processed </h4>";
+        }
+    }
 }
 else if ($_POST[ "username"] == $username && $_POST["password"] == $password){
 
     $_SESSION['login'] = $username;
-    #print_r($_COOKIE);
-    #$s = session_id();
-    #echo "<p> session id ".$s."</p>";
-    #echo "<p> login session ".$_SESSION['login']."</p>";
 }
 else {
     echo "<script>alert('username or password incorrect!')</script>";
@@ -101,15 +105,15 @@ span.psw {
 
 <h1>Welcome to Cross Site Request Forgery Demo</h1>
 
-<form action="Demo.php" method="POST">
+<form action="" method="POST">
 <div class="imgcontainer">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5IwjwQXVEGX6CWa5p1uLkZWeGn210GtmGt6V80hQ0r4TPBepB" alt="Banner" class="banner">
-    <p> Welcome, you are one step away to demo post!! </p>
+    <img src="https://www.dhresource.com/0x0s/f2-albu-g5-M01-8C-59-rBVaI1k3pZ-ADU-UAAGjI7EDYF0263.jpg/hard-cover-mini-notebook-episode-diary-book.jpg" alt="Banner" class="banner">
 </div>
 <div class="container">
-    <input type="text" placeholder="Enter your university name" name="university" required>
-    <input type="hidden" name="token" value="<?php echo generateToken('WelcomeForm')?>">
-    <button type="submit">Continue</button>
+    <input type="text" placeholder="Enter the quantity of diaries you wish to purchase" name="quantity" required>
+    <input type="hidden" name="product" required>
+    <input type="hidden" name="token" value="<?php echo generateToken(); ?>">
+    <button type="submit">Add to cart </button>
     <p> Not interested? <a href="Logout.php">Logout</a>
 </div>
 </form>
