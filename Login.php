@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,28 +70,26 @@ span.psw {
 
 <h2>Login Form</h2>
 
-<form action="/action_page.php">
+<form action="Welcome.php" method="POST">
   <div class="imgcontainer">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxDVrknSeZ5ob-z2Ew0QJFgE14TT1MoUb6pLGHg0MI6nxaDq84" alt="Avatar" class="avatar">
   </div>
 
   <div class="container">
-    <label for="uname"><b>Username</b></label>
+    <label for="username"><b>username</b></label>
     <input type="text" placeholder="Enter Username" name="username" required>
 
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="passwrod" required>
+    <label for="password"><b>password</b></label>
+    <input type="password" placeholder="Enter Password" name="password" required>
         
     <button type="submit">Login</button>
-    <label>
-      <input type="checkbox" checked="checked" name="remember"> Remember me
-    </label>
   </div>
 
   <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn">Cancel</button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
+    
   </div>
+
+  <input type="hidden" name="token" value="">
 </form>
 
 </body>
