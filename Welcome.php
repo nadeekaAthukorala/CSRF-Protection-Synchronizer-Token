@@ -1,6 +1,9 @@
 <?php
 
-session_start();
+$cookie_name = session_name();
+if (session_start()) {
+    setcookie($cookie_name, session_id(), time() + (864000), "/",null,null,true);
+}
 
 $username = "admin";
 $password = "12345678";
@@ -12,7 +15,6 @@ $hash = md5($random1.$password.$random2);
 
 $self = $_SERVER['REQUEST_URI'];
 
-
 if(isset($_SESSION['login']) && $_SESSION['login'] == $hash){
 
     echo "<h5> You have successfully logged in! <h5>";
@@ -20,6 +22,9 @@ if(isset($_SESSION['login']) && $_SESSION['login'] == $hash){
 else if ($_POST[ "username"] == $username && $_POST["password"] == $password){
 
     $_SESSION['login'] = $hash;
+    #$_SESSION['login'] = $_POST['login'];
+    print_r($_COOKIE);
+
     header("Location: $_SERVER[PHP_SELF]");
 }
 else {
