@@ -1,39 +1,35 @@
 <?php
+require_once('Token.php');
 
 $cookie_name = session_name();
-if (session_start()) {
-    setcookie($cookie_name, session_id(), time() + (864000), "/",null,null,true);
+if (session_start()){
+    setcookie($cookie_name, session_id(), time() + (60), "/",null,null,true);
 }
 
 $username = "admin";
-$password = "12345678";
-
-$random1 = 'secret_key1';
-$random2 = 'secret_key2';
-
-$hash = md5($random1.$password.$random2); 
+$password = "1234qwerty";
 
 $self = $_SERVER['REQUEST_URI'];
 
-if(isset($_SESSION['login']) && $_SESSION['login'] == $hash){
+if(isset($_SESSION['login'])){
 
-    echo "<h5> You have successfully logged in! <h5>";
+    echo "<h5>Welcome ". $_SESSION['login']."</h5>";
+    header("Location: $_SERVER[PHP_SELF]");
 }
 else if ($_POST[ "username"] == $username && $_POST["password"] == $password){
 
-    $_SESSION['login'] = $hash;
-    #$_SESSION['login'] = $_POST['login'];
-    print_r($_COOKIE);
-
-    header("Location: $_SERVER[PHP_SELF]");
+    $_SESSION['login'] = $username;
+    #print_r($_COOKIE);
+    #$s = session_id();
+    #echo "<p> session id ".$s."</p>";
+    #echo "<p> login session ".$_SESSION['login']."</p>";
 }
 else {
     echo "<script>alert('username or password incorrect!')</script>";
     echo "<script>location.href='Login.php'</script>";
-    
 }
+?>
 
-echo '
 <!DOCTYPE html>
 <html>
 <head>
@@ -105,15 +101,18 @@ span.psw {
 
 <h1>Welcome to Cross Site Request Forgery Demo</h1>
 
-<form action="Logout.php" method="POST">
+<form action="Demo.php" method="POST">
 <div class="imgcontainer">
-    <img src="https://cdn-images-1.medium.com/max/640/1*1jvRnwHNZMPiHBYMy1EwxA.png" alt="Banner" class="banner">
-    <p> Read more about cross site request forgery on <a href="https://medium.com/@nadeekaathukorala/cross-site-request-forgery-protection-in-web-applications-12c263013b55">Medium</a>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5IwjwQXVEGX6CWa5p1uLkZWeGn210GtmGt6V80hQ0r4TPBepB" alt="Banner" class="banner">
+    <p> Welcome, you are one step away to demo post!! </p>
 </div>
 <div class="container">
-    <button type="submit">Logout</button>
+    <input type="text" placeholder="Enter your university name" name="university" required>
+    <input type="hidden" name="token" value="<?php echo generateToken('WelcomeForm')?>">
+    <button type="submit">Continue</button>
+    <p> Not interested? <a href="Logout.php">Logout</a>
 </div>
 </form>
 </body>
-</html>'
-?>
+</html>
+

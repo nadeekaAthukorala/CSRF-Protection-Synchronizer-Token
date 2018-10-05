@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,8 +87,6 @@ span.psw {
   <div class="container" style="background-color:#f1f1f1">
     
   </div>
-
-  <input type="hidden" name="token" value="">
 </form>
 
 </body>
