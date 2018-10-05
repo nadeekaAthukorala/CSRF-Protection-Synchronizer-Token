@@ -7,13 +7,15 @@ function generateToken( $formName )
     }
     $sessionId = session_id();
  
-    return md5( $formName.$sessionId.$secretKey );
+    $CSRF_Token_Value = md5( $formName.$sessionId.$secretKey );
+
+    return $CSRF_Token_Value;
  
 }
 
-function checkToken( $token, $formName) 
+function checkToken( $token, $CSRF_Token_Value) 
 {
-    return $token === generateToken( $formName );
+    return $token === $CSRF_Token_Value;
 }
 
 

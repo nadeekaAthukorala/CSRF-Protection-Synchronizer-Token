@@ -1,11 +1,14 @@
 <?php
+session_start();
+
 require_once('Welcome.php');
+require_once('Token.php');
 
 if (!empty($_POST['token'])) {
  
     echo "<p>csrf token present !I am running</p>";
 
-    if( checkToken($_POST["token"], 'WelcomeForm')){
+    if( checkToken($_POST["token"], $CSRF_Token_Value)){
 
         echo "<script>alert('token matched!')</script>";
         header("Location: $_SERVER[PHP_SELF]");
